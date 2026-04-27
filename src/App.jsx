@@ -285,10 +285,13 @@ export default function NfloristWebsiteConcept() {
   const [copiedWechatId, setCopiedWechatId] = useState("");
   const [activeAlbum, setActiveAlbum] = useState(serviceAlbums[0].id);
   const [activeBouquetColor, setActiveBouquetColor] = useState("all");
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const currentAlbum = serviceAlbums.find((album) => album.id === activeAlbum) || serviceAlbums[0];
   const currentBouquetColorAlbum = bouquetAlbumsWithAll.find((album) => album.id === activeBouquetColor) || bouquetAlbumsWithAll[0];
   const currentGalleryImages = currentAlbum.id === "bouquet" ? currentBouquetColorAlbum.images : currentAlbum.images;
+
+  const closeLightbox = () => setSelectedImage(null);
 
   const copyWechatId = async (wechatId) => {
     try {
@@ -491,9 +494,29 @@ export default function NfloristWebsiteConcept() {
 
             <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
               {currentGalleryImages.map((src, index) => (
-                <motion.div key={`${currentAlbum.id}-${activeBouquetColor}-${src}-${index}`} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.25) }} className="overflow-hidden rounded-xl bg-[#1b2018] shadow-[0_10px_35px_rgba(0,0,0,0.28)] ring-1 ring-[#2f352b] sm:rounded-[1.5rem] sm:shadow-[0_18px_55px_rgba(0,0,0,0.32)]">
-                  <ImageWithFallback src={src} alt={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`} className="aspect-[4/5] h-full w-full object-cover transition duration-700 hover:scale-105" label={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`} />
-                </motion.div>
+                <motion.button
+                  key={`${currentAlbum.id}-${activeBouquetColor}-${src}-${index}`}
+                  type="button"
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.25) }}
+                  onClick={() =>
+                    setSelectedImage({
+                      src,
+                      alt: `${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`,
+                    })
+                  }
+                  className="group cursor-zoom-in overflow-hidden rounded-xl bg-[#1b2018] text-left shadow-[0_10px_35px_rgba(0,0,0,0.28)] ring-1 ring-[#2f352b] transition hover:ring-[#c7b98b] focus:outline-none focus:ring-2 focus:ring-[#c7b98b] sm:rounded-[1.5rem] sm:shadow-[0_18px_55px_rgba(0,0,0,0.32)]"
+                  aria-label={`放大查看 ${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`}
+                >
+                  <ImageWithFallback
+                    src={src}
+                    alt={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`}
+                    className="aspect-[4/5] h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    label={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`}
+                  />
+                </motion.button>
               ))}
             </div>
           </div>
@@ -596,6 +619,33 @@ export default function NfloristWebsiteConcept() {
         </section>
       </main>
 
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label="圖片放大預覽"
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#1b2018]/90 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] transition hover:bg-[#293124]"
+            aria-label="關閉圖片預覽"
+          >
+            ×
+          </button>
+          <div className="relative max-h-[88vh] max-w-6xl" onClick={(event) => event.stopPropagation()}>
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              className="max-h-[88vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_30px_100px_rgba(0,0,0,0.6)]"
+            />
+            <p className="mt-3 text-center text-sm text-[#d6cfc0]">{selectedImage.alt}</p>
+          </div>
+        </div>
+      )}
+
       <footer className="border-t border-[#2f352b] px-6 py-10">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-[#b7b19f] md:flex-row">
           <p>© {brand.name} Co. Ltd. Website concept redesign.</p>
@@ -605,5 +655,6 @@ export default function NfloristWebsiteConcept() {
     </div>
   );
 }
+
 
 
