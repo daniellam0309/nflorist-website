@@ -33,7 +33,7 @@ const translations = {
       "我們相信花不只是禮物，也是情感、祝福與空間氣氛的延伸。從一束日常鮮花，到婚禮、品牌活動與商業空間佈置，nflorist 以細緻花材配搭與自然美學，陪伴每一個值得被記住的時刻。",
     servicesLabel: "Services",
     servicesTitle: "花藝服務",
-    servicesIntro: "以不同場合為入口，讓顧客更快找到合適的花藝方案。",
+    servicesIntro: "",
     categories: [
       { icon: "✿", title: "鮮花花藝", desc: "日常花束、節日花禮、感恩父母、畢業祝賀、開張花籃與訂製花藝。" },
       { icon: "♡", title: "婚禮花卉", desc: "新娘捧花、手腕花、頭花、襟花、婚禮車花與婚宴場地佈置。" },
@@ -42,7 +42,7 @@ const translations = {
     ],
     galleryLabel: "Gallery",
     galleryTitle: "服務分類相簿",
-    galleryIntro: "按不同服務分類瀏覽作品。相片會按服務類別存放在獨立資料夾，方便整理與日後更新。",
+    galleryIntro: "",
     colorBrowse: "按色系瀏覽鮮花花藝",
     selectedAlbum: "Selected Album",
     totalWorksPrefix: "共",
@@ -121,7 +121,7 @@ const translations = {
       "We believe flowers are more than gifts. They carry emotion, blessings, and atmosphere. From a daily bouquet to weddings, brand events, and commercial venue styling, nflorist creates floral moments with thoughtful materials and natural aesthetics.",
     servicesLabel: "Services",
     servicesTitle: "Floral Services",
-    servicesIntro: "Browse by occasion and find the most suitable floral direction with ease.",
+    servicesIntro: "",
     categories: [
       { icon: "✿", title: "Fresh Florals", desc: "Daily bouquets, festive gifts, graduation flowers, opening baskets, and custom floral designs." },
       { icon: "♡", title: "Wedding Florals", desc: "Bridal bouquets, wrist corsages, hair flowers, boutonnieres, car flowers, and wedding venue styling." },
@@ -130,7 +130,7 @@ const translations = {
     ],
     galleryLabel: "Gallery",
     galleryTitle: "Service Albums",
-    galleryIntro: "Browse selected works by service category. Images are organised into folders for easier future updates.",
+    galleryIntro: "",
     colorBrowse: "Browse fresh florals by colour",
     selectedAlbum: "Selected Album",
     totalWorksPrefix: "",
@@ -575,7 +575,7 @@ export default function NfloristWebsiteConcept() {
                 <p className="text-sm uppercase tracking-[0.28em] text-[#c7b98b]">{t.servicesLabel}</p>
                 <h2 className="mt-4 text-4xl font-semibold tracking-tight">{t.servicesTitle}</h2>
               </div>
-              <p className={`max-w-lg ${theme.muted}`}>{t.servicesIntro}</p>
+              {t.servicesIntro && <p className={`max-w-lg ${theme.muted}`}>{t.servicesIntro}</p>}
             </div>
 
             <div className="grid gap-5 md:grid-cols-4">
@@ -595,7 +595,7 @@ export default function NfloristWebsiteConcept() {
             <div className="mb-12 text-center">
               <p className="text-sm uppercase tracking-[0.28em] text-[#c7b98b]">{t.galleryLabel}</p>
               <h2 className="mt-4 text-4xl font-semibold tracking-tight">{t.galleryTitle}</h2>
-              <p className={`mx-auto mt-4 max-w-2xl leading-7 ${theme.muted2}`}>{t.galleryIntro}</p>
+              {t.galleryIntro && <p className={`mx-auto mt-4 max-w-2xl leading-7 ${theme.muted2}`}>{t.galleryIntro}</p>}
             </div>
 
             <div className="mb-10 flex flex-wrap justify-center gap-3">
@@ -785,3 +785,4 @@ export default function NfloristWebsiteConcept() {
     </div>
   );
 }
+
