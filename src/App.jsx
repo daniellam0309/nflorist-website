@@ -489,9 +489,9 @@ export default function NfloristWebsiteConcept() {
               </div>
             </div>
 
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-4 lg:gap-6">
               {currentGalleryImages.map((src, index) => (
-                <motion.div key={`${currentAlbum.id}-${activeBouquetColor}-${src}-${index}`} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.25) }} className="overflow-hidden rounded-[1.5rem] bg-[#1b2018] shadow-[0_18px_55px_rgba(0,0,0,0.32)] ring-1 ring-[#2f352b]">
+                <motion.div key={`${currentAlbum.id}-${activeBouquetColor}-${src}-${index}`} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.45, delay: Math.min(index * 0.05, 0.25) }} className="overflow-hidden rounded-xl bg-[#1b2018] shadow-[0_10px_35px_rgba(0,0,0,0.28)] ring-1 ring-[#2f352b] sm:rounded-[1.5rem] sm:shadow-[0_18px_55px_rgba(0,0,0,0.32)]">
                   <ImageWithFallback src={src} alt={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`} className="aspect-[4/5] h-full w-full object-cover transition duration-700 hover:scale-105" label={`${currentAlbum.id === "bouquet" && activeBouquetColor !== "all" ? currentBouquetColorAlbum.title + "色系" : currentAlbum.title} ${index + 1}`} />
                 </motion.div>
               ))}
