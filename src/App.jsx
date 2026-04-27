@@ -332,7 +332,7 @@ const getServiceAlbums = (t, bouquetAllAlbum, bouquetAlbumsWithAll) => [
     id: "mothersday2026",
     title: t.albums.mothersday2026.title,
     description: t.albums.mothersday2026.description,
-    images: Array.from({ length: 13 }, (_,
+    images: Array.from({ length: 13 }, (_, index) => mothersDay2026ImagePath(`mothersday${index + 1}.jpg`)),
   },
 ];
 
@@ -407,6 +407,8 @@ export default function NfloristWebsiteConcept() {
   const currentAlbum = serviceAlbums.find((album) => album.id === activeAlbum) || serviceAlbums[0];
   const currentBouquetColorAlbum = bouquetAlbumsWithAll.find((album) => album.id === activeBouquetColor) || bouquetAlbumsWithAll[0];
   const currentGalleryImages = currentAlbum.id === "bouquet" ? currentBouquetColorAlbum.images : currentAlbum.images;
+  const mothersDayAlbum = serviceAlbums.find((album) => album.id === "mothersday2026") || serviceAlbums[serviceAlbums.length - 1];
+  const mothersDayPreviewImages = mothersDayAlbum.images.slice(0, 4);
 
   const locations = [
     {
@@ -599,6 +601,46 @@ export default function NfloristWebsiteConcept() {
           </div>
         </section>
 
+        <section id="mothersday2026" className="px-6 py-24">
+          <div className={`mx-auto grid max-w-7xl items-center gap-10 rounded-[2.5rem] p-6 md:grid-cols-[0.9fr_1.1fr] md:p-10 ${theme.panel}`}>
+            <div className="p-2 md:p-6">
+              <p className="text-sm uppercase tracking-[0.28em] text-[#c7b98b]">Mother&apos;s Day 2026</p>
+              <h2 className="mt-4 text-4xl font-semibold tracking-tight">{t.albums.mothersday2026.title}</h2>
+              <p className={`mt-6 text-lg leading-8 ${theme.muted}`}>{t.albums.mothersday2026.description}</p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button
+                  className="px-7 py-6 text-base"
+                  onClick={() => {
+                    setActiveAlbum("mothersday2026");
+                    setActiveBouquetColor("all");
+                    window.setTimeout(() => document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" }), 0);
+                  }}
+                >
+                  {lang === "zh" ? "查看母親節花禮" : "View Mother’s Day Gifts"}
+                </Button>
+                <a href="#wechat"><Button variant="outline" className="px-7 py-6 text-base">{lang === "zh" ? "微信預訂" : "Book on WeChat"}</Button></a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {mothersDayPreviewImages.map((src, index) => {
+                const label = `${t.albums.mothersday2026.title} ${index + 1}`;
+                return (
+                  <button
+                    key={`mothersday-preview-${src}`}
+                    type="button"
+                    onClick={() => setSelectedImage({ src, alt: label })}
+                    className="group overflow-hidden rounded-3xl bg-[#1b2018] ring-1 ring-[#3b4435] transition hover:ring-[#c7b98b] focus:outline-none focus:ring-2 focus:ring-[#c7b98b]"
+                    aria-label={`${lang === "zh" ? "放大查看" : "View larger"} ${label}`}
+                  >
+                    <ImageWithFallback src={src} alt={label} className="aspect-[4/5] h-full w-full object-cover transition duration-700 group-hover:scale-105" label={label} fallbackTitle={t.fallbackTitle} />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         <section id="gallery" className="px-6 py-24">
           <div className="mx-auto max-w-7xl">
             <div className="mb-12 text-center">
@@ -760,4 +802,42 @@ export default function NfloristWebsiteConcept() {
                 <h3 className="text-2xl font-semibold">{t.ctaTitle}</h3>
                 <p className="mt-2 text-[#2b281d]">{t.ctaText}</p>
               </div>
-             
+              <div className="mt-6 flex flex-wrap gap-3 md:mt-0">
+                <a href="#wechat" className="rounded-full bg-[#161812] px-5 py-3 text-sm font-medium text-[#f4efe6] transition hover:bg-[#252b21]">WeChat</a>
+                <a href={`mailto:${brand.email}`} className="rounded-full border border-[#161812]/30 px-5 py-3 text-sm font-medium text-[#161812] transition hover:bg-[#d9c995]">{brand.email}</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-[#2f352b] px-6 py-8">
+        <div className={`mx-auto flex max-w-7xl flex-col gap-3 text-sm ${theme.muted2} md:flex-row md:items-center md:justify-between`}>
+          <p>{t.footerLeft}</p>
+          <p>{t.footerRight}</p>
+        </div>
+      </footer>
+
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.imagePreview}
+          onClick={closeLightbox}
+        >
+          <button
+            type="button"
+            onClick={closeLightbox}
+            className="absolute right-4 top-4 rounded-full bg-[#1b2018] px-4 py-2 text-sm text-[#f4efe6] ring-1 ring-[#3b4435] transition hover:bg-[#293124] focus:outline-none focus:ring-2 focus:ring-[#c7b98b]"
+          >
+            {t.closePreview}
+          </button>
+          <div className="max-h-[88vh] max-w-5xl overflow-hidden rounded-[2rem] bg-[#1b2018] ring-1 ring-[#3b4435]" onClick={(event) => event.stopPropagation()}>
+            <ImageWithFallback src={selectedImage.src} alt={selectedImage.alt} className="max-h-[88vh] w-full object-contain" label={selectedImage.alt} fallbackTitle={t.fallbackTitle} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
