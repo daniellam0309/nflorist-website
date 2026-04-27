@@ -76,6 +76,7 @@ const translations = {
       venue: { title: "會場佈置", description: "宴會、品牌活動、開幕禮、節慶活動與商業場景花藝佈置。" },
       signboard: { title: "花牌", description: "開張花牌、祝賀花牌、活動花牌與訂製祝福花禮。" },
       tableflower: { title: "枱花", description: "餐桌花、會議枱花、接待枱花、宴會及品牌活動枱面花藝。" },
+      mothersday2026: { title: "2026年母親節花禮", description: "以溫柔花色與細緻花材，為母親節準備充滿心意的節日花禮。" },
     },
     colors: {
       all: "全部",
@@ -164,6 +165,7 @@ const translations = {
       venue: { title: "Venue Styling", description: "Banquets, brand events, openings, seasonal installations, and commercial floral styling." },
       signboard: { title: "Flower Stands", description: "Opening flower stands, congratulatory stands, event flower stands, and custom floral greetings." },
       tableflower: { title: "Table Flowers", description: "Dining table florals, meeting table flowers, reception flowers, banquet and brand event table styling." },
+      mothersday2026: { title: "Mother’s Day 2026", description: "A seasonal floral gift collection designed with soft palettes and heartfelt details for Mother’s Day." },
     },
     colors: {
       all: "All",
@@ -242,6 +244,7 @@ const weddingImagePath = (fileName) => uploadImagePath("wedding", fileName);
 const venueImagePath = (fileName) => uploadImagePath("venue", fileName);
 const signboardImagePath = (fileName) => uploadImagePath("signboard", fileName);
 const tableFlowerImagePath = (fileName) => uploadImagePath("tableflower", fileName);
+const mothersDay2026ImagePath = (fileName) => uploadImagePath("mothersday2026", fileName);
 
 const bouquetColorDefinitions = [
   { id: "red", imageFactory: () => Array.from({ length: 49 }, (_, index) => bouquetImagePath("red", `flower${index + 9}.jpg`)) },
@@ -325,6 +328,12 @@ const getServiceAlbums = (t, bouquetAllAlbum, bouquetAlbumsWithAll) => [
     description: t.albums.tableflower.description,
     images: Array.from({ length: 38 }, (_, index) => tableFlowerImagePath(`tableflower${index + 1}.jpg`)),
   },
+  {
+    id: "mothersday2026",
+    title: t.albums.mothersday2026.title,
+    description: t.albums.mothersday2026.description,
+    images: Array.from({ length: 13 }, (_,
+  },
 ];
 
 const Icon = ({ label, className = "", size = "text-2xl" }) => (
@@ -362,7 +371,7 @@ function validateWebsiteData() {
   const bouquetAllAlbum = { id: "all", title: zh.colors.all, images: bouquetColorAlbums.flatMap((album) => album.images) };
   const bouquetAlbumsWithAll = [bouquetAllAlbum, ...bouquetColorAlbums];
   const serviceAlbums = getServiceAlbums(zh, bouquetAllAlbum, bouquetAlbumsWithAll);
-  if (serviceAlbums.length < 5) errors.push("Expected at least 5 service albums.");
+  if (serviceAlbums.length < 6) errors.push("Expected at least 6 service albums.");
   if (!serviceAlbums.every((album) => album.id && album.title && album.description && Array.isArray(album.images) && album.images.length >= 1)) errors.push("Every service album must include id, title, description, and at least 1 image.");
   if (!bouquetColorAlbums.every((album) => album.id && album.title && Array.isArray(album.images))) errors.push("Every bouquet color album must include id, title, and images array.");
   if (translations.zh.categories.length < 4) errors.push("Expected at least 4 service categories.");
@@ -751,38 +760,4 @@ export default function NfloristWebsiteConcept() {
                 <h3 className="text-2xl font-semibold">{t.ctaTitle}</h3>
                 <p className="mt-2 text-[#2b281d]">{t.ctaText}</p>
               </div>
-              <div className="mt-6 flex flex-col gap-2 md:mt-0 md:items-end">
-                <div className="flex items-center gap-3"><Icon label="✉" size="text-lg" /><a href={`mailto:${brand.email}`} className="hover:underline">{brand.email}</a></div>
-                <div className="flex items-center gap-3"><Icon label="☎" size="text-lg" /><a href={brand.phoneHref} className="hover:underline">{brand.whatsapp}</a></div>
-                <div className="flex flex-wrap justify-end gap-2 pt-2 text-sm">
-                  <a href={brand.social.instagram} target="_blank" rel="noreferrer" className="rounded-full bg-[#161812]/10 px-3 py-1 hover:bg-[#161812]/20">IG</a>
-                  <a href={brand.social.facebook} target="_blank" rel="noreferrer" className="rounded-full bg-[#161812]/10 px-3 py-1 hover:bg-[#161812]/20">FB</a>
-                  <a href={brand.social.cafeInstagram} target="_blank" rel="noreferrer" className="rounded-full bg-[#161812]/10 px-3 py-1 hover:bg-[#161812]/20">Café IG</a>
-                  <a href="#wechat" className="rounded-full bg-[#161812]/10 px-3 py-1 hover:bg-[#161812]/20">WeChat</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {selectedImage && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={t.imagePreview} onClick={closeLightbox}>
-          <button type="button" onClick={closeLightbox} className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-[#1b2018]/90 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] transition hover:bg-[#293124]" aria-label={t.closePreview}>×</button>
-          <div className="relative max-h-[88vh] max-w-6xl" onClick={(event) => event.stopPropagation()}>
-            <img src={selectedImage.src} alt={selectedImage.alt} className="max-h-[88vh] w-auto max-w-full rounded-2xl object-contain shadow-[0_30px_100px_rgba(0,0,0,0.6)]" />
-            <p className="mt-3 text-center text-sm text-[#d6cfc0]">{selectedImage.alt}</p>
-          </div>
-        </div>
-      )}
-
-      <footer className="border-t border-[#2f352b] px-6 py-10">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm text-[#b7b19f] md:flex-row">
-          <p>{t.footerLeft}</p>
-          <p>{t.footerRight}</p>
-        </div>
-      </footer>
-    </div>
-  );
-}
-
+             
