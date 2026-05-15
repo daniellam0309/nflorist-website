@@ -244,13 +244,33 @@ const Lightbox = ({ selected, setSelected, fallback, closeLabel, previewLabel })
   const currentIndex = typeof selected.index === "number" ? selected.index : Math.max(0, images.indexOf(selected.src));
   const currentSrc = images[currentIndex] || selected.src;
   const touchStartX = React.useRef(0);
+
+  React.useEffect(() => {
+    const originalOverflow = document.body.style.overflow;
+    const originalTouchAction = document.body.style.touchAction;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.touchAction = originalTouchAction;
+    };
+  }, []);
   const go = (step) => {
     const nextIndex = (currentIndex + step + images.length) % images.length;
     setSelected({ src: images[nextIndex], alt: `${previewLabel} ${nextIndex + 1}`, images, index: nextIndex });
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/86 p-4 backdrop-blur" role="dialog" aria-modal="true" aria-label={previewLabel} onClick={() => setSelected(null)}>
+    <div
+      className="fixed inset-0 z-[100] flex touch-none select-none items-center justify-center overscroll-contain bg-black/86 p-4 backdrop-blur"
+      role="dialog"
+      aria-modal="true"
+      aria-label={previewLabel}
+      onClick={() => setSelected(null)}
+      onTouchMove={(event) => event.preventDefault()}
+    >
       <button type="button" className="absolute right-4 top-4 z-[120] rounded-full bg-[#1b2018] px-5 py-3 text-sm text-[#f4efe6] ring-1 ring-[#3b4435] transition hover:bg-[#293124]" onClick={() => setSelected(null)}>{closeLabel}</button>
       {images.length > 1 && <button type="button" className="absolute left-4 top-1/2 z-[120] hidden -translate-y-1/2 rounded-full bg-[#1b2018]/80 px-4 py-3 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] backdrop-blur md:block" onClick={(event) => { event.stopPropagation(); go(-1); }}>‹</button>}
       {images.length > 1 && <button type="button" className="absolute right-4 top-1/2 z-[120] hidden -translate-y-1/2 rounded-full bg-[#1b2018]/80 px-4 py-3 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] backdrop-blur md:block" onClick={(event) => { event.stopPropagation(); go(1); }}>›</button>}
