@@ -4,4 +4,24 @@
     <loc>https://nflorist.net/</loc>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://nflorist.net/flower-bouquet/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nflorist.net/opening-flower-basket/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nflorist.net/wedding-floral-design/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nflorist.net/festival-flower/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nflorist.net/plant-styling/</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
