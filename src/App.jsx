@@ -255,7 +255,7 @@ const Lightbox = ({ selected, setSelected, fallback, closeLabel, previewLabel })
       {images.length > 1 && <button type="button" className="absolute left-4 top-1/2 z-[120] hidden -translate-y-1/2 rounded-full bg-[#1b2018]/80 px-4 py-3 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] backdrop-blur md:block" onClick={(event) => { event.stopPropagation(); go(-1); }}>‹</button>}
       {images.length > 1 && <button type="button" className="absolute right-4 top-1/2 z-[120] hidden -translate-y-1/2 rounded-full bg-[#1b2018]/80 px-4 py-3 text-2xl text-[#f4efe6] ring-1 ring-[#3b4435] backdrop-blur md:block" onClick={(event) => { event.stopPropagation(); go(1); }}>›</button>}
       <div
-        className="relative max-h-[86vh] max-w-5xl overflow-hidden rounded-[2rem] bg-[#1b2018] ring-1 ring-[#3b4435]"
+        className="flex max-h-[86vh] max-w-5xl flex-col items-center gap-3"
         onClick={(event) => event.stopPropagation()}
         onTouchStart={(event) => { touchStartX.current = event.touches[0].clientX; }}
         onTouchEnd={(event) => {
@@ -263,13 +263,16 @@ const Lightbox = ({ selected, setSelected, fallback, closeLabel, previewLabel })
           if (Math.abs(diff) > 45 && images.length > 1) go(diff > 0 ? -1 : 1);
         }}
       >
-        <Img src={currentSrc} alt={selected.alt} className="max-h-[86vh] w-full object-contain" label={selected.alt} fallback={fallback} />
+        <div className="overflow-hidden rounded-[2rem] bg-[#1b2018] ring-1 ring-[#3b4435]">
+          <Img src={currentSrc} alt={selected.alt} className="max-h-[76vh] w-full object-contain" label={selected.alt} fallback={fallback} />
+        </div>
+
         {images.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2">
-            <div className="rounded-full bg-black/45 px-4 py-2 text-xs text-white backdrop-blur">
+          <div className="flex flex-col items-center gap-2">
+            <div className="rounded-full bg-white/10 px-4 py-2 text-xs text-white backdrop-blur">
               {currentIndex + 1} / {images.length}
             </div>
-            <div className="rounded-full bg-black/45 px-4 py-2 text-xs text-white/85 backdrop-blur md:hidden">
+            <div className="rounded-full bg-white/10 px-4 py-2 text-xs text-white/85 backdrop-blur md:hidden">
               ← 左右滑動查看其他相片 →
             </div>
           </div>
