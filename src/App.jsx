@@ -401,9 +401,9 @@ export function validateWebsiteData() {
   if (!albums.every((a) => a.id && a.title && a.description && a.images?.length)) errors.push("Invalid album data.");
   if (!blue?.images.includes("/images/nflorist/uploads/flower/blue/flower16.JPG")) errors.push("Missing blue flower16.JPG.");
   if (!blue?.images.includes("/images/nflorist/uploads/flower/blue/flower32.JPG")) errors.push("Missing blue flower32.JPG.");
-  if (holidayAlbum?.images.length !== 11) errors.push("520 album must contain 11 images.");
-  if (!holidayAlbum?.images.includes("/images/nflorist/uploads/love520/love5201.jpg")) errors.push("Missing 520 first image path.");
-  if (holidayPath !== "/520") errors.push("Holiday path changed unexpectedly.");
+  if (holidayAlbum?.images.length !== 30) errors.push("Graduation album must contain 30 images.");
+  if (!holidayAlbum?.images.includes("/images/nflorist/uploads/graduation/graduation1.jpg")) errors.push("Missing graduation first image path.");
+  if (holidayPath !== "/graduation") errors.push("Holiday path changed unexpectedly.");
   if (!T.zh.holiday || !T.en.holiday || !T.pt.holiday) errors.push("Missing holiday nav label.");
   return { passed: errors.length === 0, errors };
 }
