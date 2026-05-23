@@ -417,7 +417,7 @@ export default function NfloristWebsiteConcept() {
   const [activeAlbum, setActiveAlbum] = useState("bouquet");
   const [activeColor, setActiveColor] = useState("all");
   const [selected, setSelected] = useState(null);
-  const isHolidayPage = typeof window !== "undefined" && (window.location.pathname.toLowerCase().includes("520") || window.location.pathname.toLowerCase().includes("mother"));
+  const isHolidayPage = typeof window !== "undefined" && window.location.pathname.toLowerCase().includes("graduation");
   const t = T[lang];
   const { colors, albums } = useMemo(() => makeAlbums(t), [t]);
   const locations = useMemo(() => getLocations(lang), [lang]);
