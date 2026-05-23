@@ -246,7 +246,7 @@ const albumSpecs = [
   ["venue", (f) => range(f, "venue", 1, 30)],
   ["signboard", (f) => range(f, "signboard", 1, 80)],
   ["tableflower", (f) => range(f, "tableflower", 1, 38)],
-  ["graduation", () => range((file) => up("graduation", file), "graduation", 1, 30)],
+  ["graduation", () => range((file) => up("graduation", file), "graduation", 1, 94)],
 ];
 
 const makeAlbums = (t) => {
@@ -401,7 +401,7 @@ export function validateWebsiteData() {
   if (!albums.every((a) => a.id && a.title && a.description && a.images?.length)) errors.push("Invalid album data.");
   if (!blue?.images.includes("/images/nflorist/uploads/flower/blue/flower16.JPG")) errors.push("Missing blue flower16.JPG.");
   if (!blue?.images.includes("/images/nflorist/uploads/flower/blue/flower32.JPG")) errors.push("Missing blue flower32.JPG.");
-  if (holidayAlbum?.images.length !== 30) errors.push("Graduation album must contain 30 images.");
+  if (holidayAlbum?.images.length !== 94) errors.push("Graduation album must contain 94 images.");
   if (!holidayAlbum?.images.includes("/images/nflorist/uploads/graduation/graduation1.jpg")) errors.push("Missing graduation first image path.");
   if (holidayPath !== "/graduation") errors.push("Holiday path changed unexpectedly.");
   if (!T.zh.holiday || !T.en.holiday || !T.pt.holiday) errors.push("Missing holiday nav label.");
